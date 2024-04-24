@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Loading - HTMS Module</title>
+    <!-- Boiler plate------ -->
+    <link rel="icon" href="/media/module.png" type="image/png">
+    <meta name="description" content="HTMS Loading module page.">
+    <!-- ------- -->
+    <link rel="stylesheet" href="https://fsh.plus/NewStyle.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="https://htms.fsh.plus/media/module.png"/>
+    <meta name="theme-color" content="#24ffff">
+    <!-- ------------------ -->
+    <script src="https://htms.fsh.plus/js/index-v3.js" type="module" crossorigin="anonymous"></script>
+    <style>htms{display:none}</style>
+    <htms>
+      module "loading"
+    </htms>
+  </head>
+  <body>
+    <h1>Loading Module</h1>
+    <p>This module lets you add progress vars</p>
+    <pb style="--width: 50%"></pb>
+    <p>Add a &lt;pb&gt;&lt;/pb&gt; tag to add straight progress bar</p>
+    <p>You can add the following in style to stylize the bar</p>
+    <ul>
+      <li>--width current progress</li>
+      <li>--color covered part color</li>
+      <li>--background non covered color</li>
+      <li>--radius the bars radius</li>
+      <li>--txtcolor color of the text</li>
+      <li>--txtpos where the text is (left, center, right)</li>
+      <li>--txtfont font used for text</li>
+      <li>--txt:none to remove the text</li>
+    </ul>
+    <pb style="--width:50%;--color:#f00;--background:#0ff;--radius:0.2rem;--txtcolor:#000;--txtpos:right;--txtfont:serif;"></pb>
+    <h2>Animations</h2>
+    <label>--animation:LMPulse</label><pb style="--width:75%;--animation:LMPulse;--txt:none;"></pb>
+    <label>--animation:LMRainbow</label><pb style="--width:75%;--animation:LMRainbow;--txt:none;"></pb>
+  </body>
+</html>
