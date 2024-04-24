@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>HTMS</title>
+    <!-- Boiler plate------ -->
+    <link rel="icon" href="./media/logo.png" type="image/png">
+    <meta name="description" content="HTMS front page. Divide your html in samples.">
+    <!-- ------- -->
+    <link rel="stylesheet" href="https://fsh.plus/NewStyle.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="https://htms.fsh.plus/media/logo.png"/>
+    <meta name="theme-color" content="#ffcc23">
+    <!-- ------------------ -->
+    <style>
+      body {
+        margin:0;
+        padding:0;
+      }
+      main {
+        padding: 5px;
+      }
+      .banner {
+        padding: 15px;
+        background: linear-gradient( rgba(16, 16, 0, 0.08), rgba(16, 16, 0, 0.2) ), url(./media/banner.jpg), #ffcc23;
+        background-position: left center;
+        background-size: 100%;
+        width: calc(100% - 30px);
+        height: fit-content;
+      }
+      pre {
+        padding: 10px;
+        background-color: #222;
+        border-radius: 0.5rem;
+        overflow: auto;
+      }
+      .flexh {
+        display: flex;
+        align-items: center;
+      }
+      button:has(svg) {
+        position: absolute;
+        right: 12px;
+        border: none;
+        width: fit-content;
+        display: flex;
+        align-items: center;
+      }
+      button svg {
+        margin-right: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="banner">
+      <a href="https://htms-docs.fsh.plus/" target="_blank"><button aria-label="Documentation"><svg xmlns="http://www.w3.org/2000/svg" height="20" width="17.5" viewBox="0 0 448 512"><path fill="#fff" d="M0 96C0 43 43 0 96 0h96V190.7c0 13.4 15.5 20.9 26 12.5L272 160l54 43.2c10.5 8.4 26 .9 26-12.5V0h32 32c17.7 0 32 14.3 32 32V352c0 17.7-14.3 32-32 32v64c17.7 0 32 14.3 32 32s-14.3 32-32 32H384 96c-53 0-96-43-96-96V96zM64 416c0 17.7 14.3 32 32 32H352V384H96c-17.7 0-32 14.3-32 32z"/></svg> Docs</button></a>
+      <div class="flexh">
+        <img src="./media/logo.svg" alt="HTMS logo" width="50" height="50">
+        <h1>HTMS</h1>
+      </div>
+      <p>Hyper Text Markup Sample(s)</p>
+      <p>Divide your HTML in reusable samples!</p>
+    </div>
+    <main>
+    <h2>Add it to your website</h2>
+    <label for="LAB1">Version:</label>
+    <select id="LAB1">
+      <option value="v0">v0 [Alpha]</option>
+      <option value="v1">v1 [Alpha]</option>
+      <option value="v2">v2</option>
+      <option value="v3" selected>v3 [Stable]</option>
+      <option value="v4">v4 [Dev]</option>
+    </select>
+    <br>
+    <label for="LAB2">Mode:</label>
+    <select id="LAB2">
+      <option value="index">Original</option>
+      <option value="min">Minified</option>
+    </select>
+    <br>
+    <pre><button aria-label="Copy" onclick="navigator.clipboard.writeText(document.getElementById('copy').innerHTML.replaceAll('&\lt;','<').replaceAll('&\gt;','>'))"><svg xmlns="http://www.w3.org/2000/svg" height="20" width="15" viewBox="0 0 384 512"><path fill="#fff" d="M192 0c-41.8 0-77.4 26.7-90.5 64H64C28.7 64 0 92.7 0 128V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H282.5C269.4 26.7 233.8 0 192 0zm0 64a32 32 0 1 1 0 64 32 32 0 1 1 0-64zM112 192H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg></button><code id="code"></code></pre>
+    <p style="display:none" id="copy"></p>
+    <script>
+      function style(co) {
+        return co
+.replaceAll(/.+?=".+?"/g, function(match){return `[span style="color:#ccf"]${match.split("=")[0]}=[/span][span style="color:#9d9"]${match.split("=")[1]}[/span]`})
+.replaceAll(/>|&lt;\/|&lt;|script|htms>|style>/g, function(match){return `<span style="color:#99d">${match}</span>`})
+.replaceAll(/.+?{|}/g, function(match){return `<span style="color:#cff">${match}</span>`})
+.replaceAll("[","<").replaceAll("]",">")
+      }
+      function gen() {
+        let cod = `<script src="https://htms.fsh.plus/js/${document.getElementsByTagName('select')[1].value}-${document.getElementsByTagName('select')[0].value}.js" type="module" crossorigin="anonymous"><\/script>
+<style>htms{display:none}</style>
+<htms>
+  HTMS settings here
+</htms>`.replaceAll("<","&lt;")
+        document.getElementById('code').innerHTML = style(cod)
+        document.getElementById('copy').innerHTML = cod
+      }
+      document.getElementsByTagName('select')[0].onchange = gen;
+      document.getElementsByTagName('select')[1].onchange = gen;
+      gen()
+    </script>
+      <h2>Resources</h2>
+      <a onclick="this.href='/example/'+document.getElementById('LAB1').value+'.html'"><button>See example</button></a>
+      <a href="/module"><button>Modules</button></a>
+    </main>
+  </body>
+</html>
