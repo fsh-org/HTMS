@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Example - HTMS</title>
+    <!-- Boiler plate------ -->
+    <link rel="icon" href="/media/logo.png" type="image/png">
+    <meta name="description" content="HTMS example page. See htms in action.">
+    <!-- ------- -->
+    <link rel="stylesheet" href="https://fsh.plus/NewStyle.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="https://htms.fsh.plus/media/logo.png"/>
+    <meta name="theme-color" content="#ffcc23">
+    <!-- ------------------ -->
+    <script src="../js/index-v3.js" type="module" crossorigin="anonymous"></script>
+    <style>htms{display:none}</style>
+    <htms>
+      module "hello"
+      module "ip"
+      import "hi","re" from "/sample.htms"
+      inject "welcome" with "hi"
+      replace "rr" with "re"
+    </htms>
+  </head>
+  <body>
+    <h1>Example page</h1>
+    <h2>Cross file contents</h2>
+    <welcome>Fallback</welcome>
+    <p>Inject for html inside elements or replace to change the element for the html (inject allows multiple updates, replace doesn't)</p>
+    <h2>Static vars</h2>
+    <rr var="W:parts;">H1</rr>
+    <rr var="W:things">H2</rr>
+    <h2>Modules</h2>
+    <p>Quickly add premade code</p>
+    <p>hello module prints hello world, this is a example module, there are many more</p>
+    <button onclick="window.IP().then(async e=> {e=await e;this.innerHTML = e})">IP module</button>
+    <h2>Backend</h2>
+    <p>You can use the SUpdate function in the window object to reload the config (beta)</p>
+    <p>And you can listen for the SLoad event to know when htms finished loading</p>
+    <button onclick="window.SUpdate()">Reload</button>
+  </body>
+</html>
