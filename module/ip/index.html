@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>IP - HTMS Module</title>
+    <!-- Boiler plate------ -->
+    <link rel="icon" href="/media/module.png" type="image/png">
+    <meta name="description" content="HTMS IP module page.">
+    <!-- ------- -->
+    <link rel="stylesheet" href="https://fsh.plus/NewStyle.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="https://htms.fsh.plus/media/module.png"/>
+    <meta name="theme-color" content="#24ffff">
+    <!-- ------------------ -->
+    <script src="https://htms.fsh.plus/js/index-v3.js" type="module" crossorigin="anonymous"></script>
+    <style>htms{display:none}</style>
+    <htms>
+      module "ip"
+    </htms>
+  </head>
+  <body>
+    <h1>Ip Module</h1>
+    <p>This module lets you get the users ip</p>
+    <p>To get you need to await window.IP()</p>
+    <p>You can also pass a type</p>
+    <ul>
+      <li>private - Private ip</li>
+      <li>public - Public ip</li>
+      <li>all - Both</li>
+    </ul>
+    <button onclick="window.IP().then(async e=> {e=await e;this.innerHTML = e})">Get user IP</button>
+  </body>
+</html>
