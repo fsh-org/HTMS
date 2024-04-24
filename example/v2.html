@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../js/index-v2.js" type="module"></script>
+    <style>htms{display:none}</style>
+    <htms>
+      module "hello"
+      import "hi","re" from "/sample.htms"
+      inject "welcome" with "hi"
+      inject "rr" with "re"
+    </htms>
+    <link href="https://fsh.plus/newStyle.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>Example page</h1>
+    <h2>Cross file contents</h2>
+    <welcome>Fallback</welcome>
+    <h2>Static vars</h2>
+    <rr var="W:parts;">H1</rr>
+    <rr var="W:things">H2</rr>
+    <h2>Modules</h2>
+    <p>Quickly add premade code</p>
+    <p>hello module prints hello world, this is a example module, there are many more</p>
+    <h2>Backend</h2>
+    <p>You can use the SUpdate function in the window object to reload the config (beta)</p>
+    <p>And you can listen for the SLoad event to know when htms finished loading</p>
+    <button onclick="window.SUpdate()">Reload</button>
+  </body>
+</html>
