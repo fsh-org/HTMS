@@ -1,0 +1,17 @@
+<sample name="Example">
+  <p>hi</p>
+</sample>
+
+<sample name="Potat">
+  <p>bye</p>
+</sample>
+
+<sample name="hi">
+  <p>This message is from a .htms file on the website</p>
+  <p>Now import multiple samples at the same time by separating the names with ,</p>
+  <p>Code coments through //</p>
+</sample>
+
+<sample name="re">
+  <p>Reuse content and change some ${W}</p>
+</sample>
