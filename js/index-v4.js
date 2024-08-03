@@ -162,22 +162,28 @@ function SUpdate() {
   }
 
   // Dynamic vars
-  Array.from(document.querySelectorAll('*[htms-out]')).forEach(u => {
-    let valueElements = ['input', 'textarea', 'select'];
-    function upd() {
-      document.querySelectorAll('*[htms-in="'+u.getAttribute('htms-out')+'"]').forEach(r => {
-        let ch = (valueElements.includes(u.tagName.toLocaleLowerCase()) ? u.value : u.innerHTML);
-        (valueElements.includes(r.tagName.toLocaleLowerCase()) ? r.value = ch : r.innerHTML = ch);
+  const valueElements = ['input', 'textarea', 'select'];
+  Array.from(document.querySelectorAll('[htms-out]')).forEach(u => {
+    const tagName = u.tagName.toLowerCase();
+  
+    const upd = () => {
+      const newValue = valueElements.includes(tagName) ? u.value : u.innerHTML;
+      document.querySelectorAll(`[htms-in="${u.getAttribute('htms-out')}"]`).forEach(r => {
+        if (valueElements.includes(r.tagName.toLowerCase())) {
+          r.value = newValue;
+        } else {
+          r.innerHTML = newValue;
+        }
       });
-    }
-      
-    let observer = new MutationObserver(function(){upd()})
+    };
+
+    const observer = new MutationObserver(upd);
     observer.observe(u, { attributes: true, childList: true, subtree: true });
     obs.push(observer);
-    
-    u.addEventListener('input', upd)
-    events.push([u, upd])
-  })
+
+    u.addEventListener('input', upd);
+    events.push([u, upd]);
+  });
 
   // Dispatch load event
   document.dispatchEvent(new Event('SLoad', { bubbles: true }));
