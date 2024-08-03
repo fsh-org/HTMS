@@ -110,7 +110,7 @@ function SUpdate() {
         Array.from(document.getElementsByTagName(args[1].slice(1,-1))).forEach(async elm => {
           for (let i = 0; i < 5; i++) {
             if (!imports[args[3].slice(1,-1)]) {
-              await delay(500)
+              await delay(200)
             }
           }
           if (imports[args[3].slice(1,-1)]) {
@@ -134,7 +134,7 @@ function SUpdate() {
         Array.from(document.getElementsByTagName(args[1].slice(1,-1))).forEach(async elm => {
           for (let i = 0; i < 5; i++) {
             if (!imports[args[3].slice(1,-1)]) {
-              await delay(500)
+              await delay(200)
             }
           }
           if (imports[args[3].slice(1,-1)]) {
