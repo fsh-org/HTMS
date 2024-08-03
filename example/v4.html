@@ -17,10 +17,10 @@
     <style>htms{display:none}</style>
     <htms>
       exp noDuplicateStyle
-      
+
       module "hello"
       module "ip"
-      
+
       import "hi","re" from "/sample.htms"
       inject "welcome" with "hi"
       replace "rr" with "re"
@@ -41,9 +41,10 @@
     <p>Quickly add premade code</p>
     <p>hello module prints hello world, this is a example module, there are many more</p>
     <button onclick="window.IP().then(async e=> {e=await e;this.innerHTML = e})">IP module</button>
-    <h2>Backend</h2>
-    <p>You can use the SUpdate function in the window object to reload the config (beta)</p>
+    <h2>JS</h2>
+    <p>You can use the htms.update function in the window object to reload the config</p>
     <p>And you can listen for the SLoad event to know when htms finished loading</p>
-    <button onclick="window.SUpdate()">Reload</button>
+    <button onclick="window.htms.update()">Reload</button>
+    <button onclick="window.htms.removeCache()">Remove cache</button>
   </body>
 </html>
