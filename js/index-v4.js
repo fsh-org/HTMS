@@ -1,23 +1,29 @@
-// HTMS
+/*
+  HTMS v4
+  Maintained by Fsh-org
+*/
+
 // Data
 let files = {};
 let imports = {};
-let events = [];
 let obs = [];
+let events = [];
 
-// Experimental
+// Experimental tags
 let exp = {
   noDuplicateStyle: false
 }
 
+// Utilities
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+// Get a file
 async function SFile(url) {
   return new Promise((resolve, reject) => {
     if (!files[url]) {
-      fetch(url).then(async re =>{
-        re = await re.text()
-        files[url] = re
+      fetch(url).then(async re => {
+        re = await re.text();
+        files[url] = re;
         resolve(re)
       })
     } else {
@@ -26,18 +32,23 @@ async function SFile(url) {
   });
 }
 
-function SReplace(Obj,str) {
+// Replace a element
+function SReplace(Obj, str) {
   if(Obj.outerHTML) {
-    Obj.outerHTML= str;
+    // New browsers
+    Obj.outerHTML = str;
   } else {
-    var tmpObj=document.createElement("div");
-    tmpObj.innerHTML=str;
-    ObjParent=Obj.parentNode;
-    ObjParent.replaceChild(tmpObj,Obj); 
+    // Old browsers
+    let tmpObj = document.createElement("div");
+    tmpObj.innerHTML = str;
+    ObjParent = Obj.parentNode;
+    ObjParent.replaceChild(tmpObj, Obj); 
   }
 }
 
+// Run config
 function SUpdate() {
+  // Check experiments
   if (exp.noDuplicateStyle) {
     if (!document.getElementById('HTMS-style')) {
       document.head.innerHTML += '<style id="HTMS-style">htms{display:none ! important}</style>';
@@ -45,113 +56,118 @@ function SUpdate() {
   } else {
     document.head.innerHTML += '<style>htms{display:none ! important}</style>';
   }
-  
-  obs.forEach(df => {
-    df.disconnect()
-  })
-  events.forEach(ef => {
-    ef[0].removeEventListener('input', ef[1])
-  })
-    
-  let SMainElem = Array.from(document.getElementsByTagName('htms'))
-  if (SMainElem.length > 1) {
-    console.warn('Multiple htms elements provided, only the first one will take effect')
-  } else if (SMainElem.length < 1) {
-    console.warn('HTMS was included but no config was detected')
+
+  // Remove listeners if there are any
+  if (obs.length) {
+    obs.forEach(df => {
+      df.disconnect()
+    })
+    events.forEach(ef => {
+      ef[0].removeEventListener('input', ef[1])
+    })
+  }
+
+  // Get config
+  let SMainElem = document.querySelector('htms');
+  if (!SMainElem) {
+    console.warn('HTMS was included but no config was detected');
     return;
   }
-  SMainElem = SMainElem[0]
-    
-  let SFig = SMainElem.innerHTML.split('\n').filter(e=>{return e.length > 0});
-  SFig = SFig.map(e=>{return e.split(' ').filter(d=>{return d.length>0}).join(' ')});
-  SFig = SFig.filter(e=>{return e.length > 0});
-  SFig = SFig.filter(e=>{return !e.startsWith('//')});
+  if (document.querySelectorAll('htms').length > 1) {
+    console.warn('Multiple htms elements provided, only the first one will take effect');
+  }
 
-  for (let line in SFig) {
-    line = SFig[line]
-    let args = line.split(' ')
-    let action = args[0]
-    if (action == "import") {
-      if (args[2] != 'from') {
-        throw new Error('Import missing "from"')
-        return;
-      }
+  // Clean up
+  let SConfig = SMainElem.innerHTML
+    .split('\n')
+    .map(e => e.trim())
+    .filter(e => e.length > 0 && !e.startsWith('//'));
 
-      args[3] = args[3].slice(1, args[3].length-1)
-
-      SFile(args[3]).then(dd=>{
-          args[1].split(',').map(ee =>{return ee.slice(1,ee.length-1)}).forEach(t => {
-          let reg = new RegExp('<sample .*?name="'+t+'".*?>[^✓]*?</sample>')
-          imports[t] = dd.match(reg)[0].replaceAll(/<sample .+?>|<\/sample>/g, '').trim()
+  // Read & parse
+  for (let line of SConfig) {
+    let args = line.split(' ');
+    switch (args[0]) {
+      case 'import':
+        if (args[2] != 'from') {
+          throw new Error('Import missing "from"')
+          return;
+        }
+        SFile(args[3].slice(1,-1)).then(file => {
+          args[1]
+            .split(',')
+            .map(ee => ee.slice(1,-1))
+            .forEach(t => {
+              let reg = new RegExp('<sample .*?name="'+t+'".*?>[^¬]*?</sample>');
+              imports[t] = file.match(reg)[0].replaceAll(/<sample .+?>|<\/sample>/g, '').trim();
+            })
         })
-      })
-    } else if (action == "inject") {
-      if (args[2] != 'with') {
-        throw new Error('Inject missing "with"')
-        return;
-      }
-
-      Array.from(document.getElementsByTagName(args[1].slice(1,args[1].length-1))).forEach(async elm => {
-        for (let i = 0; i < 5; i++) {
-          if (!imports[args[3].slice(1,args[3].length-1)]) {
-            await delay(500)
-          }
+        break;
+      case 'inject':
+        if (args[2] != 'with') {
+          throw new Error('Inject missing "with"')
+          return;
         }
-        if (imports[args[3].slice(1,args[3].length-1)]) {
-          let ht = imports[args[3].slice(1,args[3].length-1)];
-          if ((elm.attributes['var'] || '').value) {
-            elm.attributes['var'].value.split(';').filter(e=>e.length).forEach(t=>{
-              ht = ht.replaceAll('${'+t.split(':')[0]+'}', t.split(':')[1])
-            })
+        Array.from(document.getElementsByTagName(args[1].slice(1,-1))).forEach(async elm => {
+          for (let i = 0; i < 5; i++) {
+            if (!imports[args[3].slice(1,-1)]) {
+              await delay(500)
+            }
           }
-          elm.innerHTML = ht
-        } else {
-          throw new Error(args[3].slice(1,args[3].length-1)+' was not defined when inject loaded')
-        }
-      })
-    } else if (action == "replace") {
-      if (args[2] != 'with') {
-        throw new Error('Replace missing "with"')
-        return;
-      }
-
-      Array.from(document.getElementsByTagName(args[1].slice(1,args[1].length-1))).forEach(async elm => {
-        for (let i = 0; i < 5; i++) {
-          if (!imports[args[3].slice(1,args[3].length-1)]) {
-            await delay(500)
+          if (imports[args[3].slice(1,-1)]) {
+            let ht = imports[args[3].slice(1,-1)];
+            if ((elm.attributes['var'] || '').value) {
+              elm.attributes['var'].value.split(';').filter(e=>e.length).forEach(t=>{
+                ht = ht.replaceAll('${'+t.split(':')[0]+'}', t.split(':')[1])
+              })
+            }
+            elm.innerHTML = ht
+          } else {
+            throw new Error(args[3].slice(1,-1)+' was not defined when inject loaded')
           }
+        })
+        break;
+      case 'replace'
+        if (args[2] != 'with') {
+          throw new Error('Replace missing "with"')
+          return;
         }
-        if (imports[args[3].slice(1,args[3].length-1)]) {
-          let ht = imports[args[3].slice(1,args[3].length-1)];
-          if ((elm.attributes['var'] || '').value) {
-            elm.attributes['var'].value.split(';').filter(e=>e.length).forEach(t=>{
-              ht = ht.replaceAll('${'+t.split(':')[0]+'}', t.split(':')[1])
-            })
+        Array.from(document.getElementsByTagName(args[1].slice(1,-1))).forEach(async elm => {
+          for (let i = 0; i < 5; i++) {
+            if (!imports[args[3].slice(1,-1)]) {
+              await delay(500)
+            }
           }
-          SReplace(elm, ht)
-        } else {
-          throw new Error(args[3].slice(1,args[3].length-1)+' was not defined when replace loaded')
-        }
-      })
-    } else if (action == "module") {
-      fetch('https://htms.fsh.plus/module/'+args[1].slice(1,args[1].length-1)+'/module.js').then(async h => {
-        h = await h.text();
-        eval(h);
-      })
-    } else if (action == "exp") {
-      exp[args[1]] = true
-    } else {
-      throw new Error(action+' Is not a valid action')
+          if (imports[args[3].slice(1,-1)]) {
+            let ht = imports[args[3].slice(1,-1)];
+            if ((elm.attributes['var'] || '').value) {
+              elm.attributes['var'].value.split(';').filter(e=>e.length).forEach(t=>{
+                ht = ht.replaceAll('${'+t.split(':')[0]+'}', t.split(':')[1])
+              })
+            }
+            SReplace(elm, ht)
+          } else {
+            throw new Error(args[3].slice(1,-1)+' was not defined when replace loaded')
+          }
+        })
+        break;
+      case 'module':
+        SFile('https://htms.fsh.plus/module/'+args[1].slice(1,-1)+'/module.js').then(code => eval(code))
+        break;
+      case 'exp':
+        exp[args[1]] = true;
+        break;
+      default:
+        throw new Error(args[0]+' is not a valid action');
     }
   }
-  var Sload = new Event('SLoad');
-  document.dispatchEvent(Sload);
-    
+
+  // Dynamic vars
   Array.from(document.querySelectorAll('*[htms-out]')).forEach(u => {
+    let valueElements = ['input', 'textarea', 'select'];
     function upd() {
       document.querySelectorAll('*[htms-in="'+u.getAttribute('htms-out')+'"]').forEach(r => {
-        let ch = (['input', 'textarea', 'select'].includes(u.tagName.toLocaleLowerCase()) ? u.value : u.innerHTML);
-        (['input', 'textarea', 'select'].includes(r.tagName.toLocaleLowerCase()) ? r.value = ch : r.innerHTML = ch);
+        let ch = (valueElements.includes(u.tagName.toLocaleLowerCase()) ? u.value : u.innerHTML);
+        (valueElements.includes(r.tagName.toLocaleLowerCase()) ? r.value = ch : r.innerHTML = ch);
       });
     }
       
@@ -162,6 +178,9 @@ function SUpdate() {
     u.addEventListener('input', upd)
     events.push([u, upd])
   })
+
+  // Dispatch load event
+  document.dispatchEvent(new Event('SLoad', { bubbles: true }));
 }
 
 function SRemoveCache() {
@@ -170,5 +189,7 @@ function SRemoveCache() {
 }
 
 document.addEventListener("DOMContentLoaded", SUpdate)
-window.SUpdate = SUpdate;
-window.SRemoveCache = SRemoveCache;
+window.htms = {
+  update: SUpdate,
+  removeCache: SRemoveCache
+}
