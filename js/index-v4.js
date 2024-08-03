@@ -126,7 +126,7 @@ function SUpdate() {
           }
         })
         break;
-      case 'replace'
+      case 'replace':
         if (args[2] != 'with') {
           throw new Error('Replace missing "with"')
           return;
