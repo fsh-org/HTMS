@@ -92,4 +92,4 @@ function SUpdate() {
   })
 }
 
-window.addEventListener('load', SUpdate)
+window.addEventListener('load', SUpdate)  

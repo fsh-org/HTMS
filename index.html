@@ -14,30 +14,35 @@
     <meta name="theme-color" content="#ffcc23">
     <!-- ------------------ -->
     <style>
-      body {
-        margin:0;
-        padding:0;
-      }
-      main {
-        padding: 5px;
-      }
       .banner {
-        padding: 15px;
         background: linear-gradient( rgba(16, 16, 0, 0.08), rgba(16, 16, 0, 0.2) ), url(/media/banner.jpg), #ffcc23;
         background-position: left center;
         background-size: 100%;
-        width: calc(100% - 30px);
-        height: fit-content;
+        box-sizing: border-box;
+        width: 100vw;
+        min-height: auto;
+        height: 20vh;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .banner div {
+        display: flex;
+        align-items: center;
+      }
+
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
       pre {
         padding: 10px;
         background-color: var(--bg-2);
         border-radius: 0.5rem;
         overflow: auto;
-      }
-      .flexh {
-        display: flex;
-        align-items: center;
       }
       button:has(svg) {
         position: absolute;
@@ -54,8 +59,7 @@
   </head>
   <body>
     <div class="banner">
-      <a href="https://htms-docs.fsh.plus/" target="_blank"><button aria-label="Documentation"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><!--Fsh icons--><path fill-rule="evenodd" clip-rule="evenodd" d="M44 32H125V110.674C125 112.521 127.29 113.381 128.506 111.99L149.489 87.989C151.082 86.166 153.918 86.166 155.511 87.989L176.494 111.99C177.71 113.381 180 112.521 180 110.674V32H209V171.2H90.7851L90.8388 171.329H63.4116C54.8788 171.329 47.9616 178.246 47.9616 186.779C47.9616 194.403 53.4852 200.738 60.7494 202H216V43H223C227.418 43 231 46.5817 231 51V202V216.4C231 220.818 227.418 224.4 223 224.4H58V224.268C40.6331 223.488 26.5848 208.699 25.1252 190H25V186.779V51C25 40.5066 33.5066 32 44 32ZM66 179C61.5817 179 58 182.582 58 187C58 191.418 61.5817 195 66 195H208V179H66Z"/></svg> Docs</button></a>
-      <div class="flexh">
+      <div>
         <img src="/media/logo.svg" alt="HTMS logo" width="50" height="50">
         <h1>HTMS</h1>
       </div>
@@ -63,47 +67,49 @@
       <p>Divide your HTML in reusable samples!</p>
     </div>
     <main>
-    <h2>Add it to your website</h2>
-    <label for="LAB1">Version:</label>
-    <select id="LAB1">
-      <option value="v0">v0 [Alpha]</option>
-      <option value="v1">v1 [Alpha]</option>
-      <option value="v2">v2</option>
-      <option value="v3" selected>v3 [Stable]</option>
-      <option value="v4">v4 [Dev]</option>
-    </select>
-    <br>
-    <label for="LAB2">Mode:</label>
-    <select id="LAB2">
-      <option value="index">Original</option>
-      <option value="min">Minified</option>
-    </select>
-    <br>
-    <pre><button aria-label="Copy" onclick="navigator.clipboard.writeText(document.getElementById('copy').innerHTML.replaceAll('&\lt;','<').replaceAll('&\gt;','>'))"><svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 256 256"><!--Fsh icons--><rect x="91" y="93" width="116" height="116" rx="14" stroke-width="12" fill="none"/><rect x="42" y="41" width="128" height="128" rx="20"/></svg></button><code id="code"></code></pre>
-    <p style="display:none" id="copy"></p>
-    <script>
-      function style(co) {
-        return co
-.replaceAll(/.+?=".+?"/g, function(match){return `[span style="color:#ccf"]${match.split("=")[0]}=[/span][span style="color:#9d9"]${match.split("=")[1]}[/span]`})
-.replaceAll(/>|&lt;\/|&lt;|script|htms>|style>/g, function(match){return `<span style="color:#99d">${match}</span>`})
-.replaceAll(/.+?{|}/g, function(match){return `<span style="color:#cff">${match}</span>`})
-.replaceAll("[","<").replaceAll("]",">")
-      }
-      function gen() {
-        let cod = `<script src="https://htms.fsh.plus/js/${document.getElementsByTagName('select')[1].value}-${document.getElementsByTagName('select')[0].value}.js" type="module" crossorigin="anonymous"><\/script>
+      <h2>Add it to your website</h2>
+      <div>
+        <label for="version">Version:</label>
+        <select id="version">
+          <option value="v0">v0 [Alpha]</option>
+          <option value="v1">v1 [Alpha]</option>
+          <option value="v2">v2</option>
+          <option value="v3" selected>v3 [Stable]</option>
+          <option value="v4">v4 [Dev]</option>
+        </select>
+        <br>
+        <label for="type">Type:</label>
+        <select id="type">
+          <option value=".js">Source</option>
+          <option value=".min.js" selected>Minified</option>
+        </select>
+      </div>
+      <pre><button aria-label="Copy" onclick="navigator.clipboard.writeText(document.getElementById('copy').innerHTML.replaceAll('&\lt;','<').replaceAll('&\gt;','>'))"><svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 256 256"><!--Fsh icons--><rect x="91" y="93" width="116" height="116" rx="14" stroke-width="12" fill="none"/><rect x="42" y="41" width="128" height="128" rx="20"/></svg></button><code id="code"></code></pre>
+      <p style="display:none" id="copy"></p>
+      <script>
+        function style(co) {
+          return co
+            .replaceAll(/.+?=".+?"/g, function(match){return `[span style="color:#ccf"]${match.split("=")[0]}=[/span][span style="color:#9d9"]${match.split("=")[1]}[/span]`})
+            .replaceAll(/>|&lt;\/|&lt;|script|htms>|style>/g, function(match){return `<span style="color:#99d">${match}</span>`})
+            .replaceAll(/.+?{|}/g, function(match){return `<span style="color:#cff">${match}</span>`})
+            .replaceAll("[","<").replaceAll("]",">")
+        }
+        function gen() {
+          let cod = `<script src="https://htms.fsh.plus/js/${document.getElementById('version').value}${document.getElementById('type').value}" type="module" crossorigin="anonymous"><\/script>
 <style>htms{display:none}</style>
 <htms>
   HTMS settings here
 </htms>`.replaceAll("<","&lt;")
-        document.getElementById('code').innerHTML = style(cod)
-        document.getElementById('copy').innerHTML = cod
-      }
-      document.getElementsByTagName('select')[0].onchange = gen;
-      document.getElementsByTagName('select')[1].onchange = gen;
-      gen()
-    </script>
+          document.getElementById('code').innerHTML = style(cod)
+          document.getElementById('copy').innerHTML = cod
+        }
+        document.getElementById('version').onchange = gen;
+        document.getElementById('type').onchange = gen;
+        gen()
+      </script>
       <h2>Resources</h2>
-      <a onclick="this.href='/example/'+document.getElementById('LAB1').value+'.html'"><button>See example</button></a>
+      <a href="https://htms-docs.fsh.plus/" target="_blank"><button aria-label="Documentation"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><!--Fsh icons--><path fill-rule="evenodd" clip-rule="evenodd" d="M44 32H125V110.674C125 112.521 127.29 113.381 128.506 111.99L149.489 87.989C151.082 86.166 153.918 86.166 155.511 87.989L176.494 111.99C177.71 113.381 180 112.521 180 110.674V32H209V171.2H90.7851L90.8388 171.329H63.4116C54.8788 171.329 47.9616 178.246 47.9616 186.779C47.9616 194.403 53.4852 200.738 60.7494 202H216V43H223C227.418 43 231 46.5817 231 51V202V216.4C231 220.818 227.418 224.4 223 224.4H58V224.268C40.6331 223.488 26.5848 208.699 25.1252 190H25V186.779V51C25 40.5066 33.5066 32 44 32ZM66 179C61.5817 179 58 182.582 58 187C58 191.418 61.5817 195 66 195H208V179H66Z"/></svg> Documentation</button></a>
+      <a onclick="this.href='/example/'+document.getElementById('LAB1').value+'.html'"><button>See slected example</button></a>
       <a href="/module"><button>Modules</button></a>
     </main>
   </body>
