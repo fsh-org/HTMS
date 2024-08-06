@@ -44,7 +44,7 @@
         border-radius: 0.5rem;
         overflow: auto;
       }
-      button:has(svg) {
+      .copy {
         position: absolute;
         right: 12px;
         border: none;
@@ -52,7 +52,7 @@
         display: flex;
         align-items: center;
       }
-      button svg {
+      .copy svg {
         margin-right: 2px;
       }
     </style>
@@ -84,7 +84,7 @@
           <option value=".min.js" selected>Minified</option>
         </select>
       </div>
-      <pre><button aria-label="Copy" onclick="navigator.clipboard.writeText(document.getElementById('copy').innerHTML.replaceAll('&\lt;','<').replaceAll('&\gt;','>'))"><svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 256 256"><!--Fsh icons--><rect x="91" y="93" width="116" height="116" rx="14" stroke-width="12" fill="none"/><rect x="42" y="41" width="128" height="128" rx="20"/></svg></button><code id="code"></code></pre>
+      <pre><button aria-label="Copy" class="copy" onclick="navigator.clipboard.writeText(document.getElementById('copy').innerHTML.replaceAll('&\lt;','<').replaceAll('&\gt;','>'))"><svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 256 256"><!--Fsh icons--><rect x="91" y="93" width="116" height="116" rx="14" stroke-width="12" fill="none"/><rect x="42" y="41" width="128" height="128" rx="20"/></svg></button><code id="code"></code></pre>
       <p style="display:none" id="copy"></p>
       <script>
         function style(co) {
@@ -108,9 +108,11 @@
         gen()
       </script>
       <h2>Resources</h2>
-      <a href="https://htms-docs.fsh.plus/" target="_blank"><button aria-label="Documentation"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><!--Fsh icons--><path fill-rule="evenodd" clip-rule="evenodd" d="M44 32H125V110.674C125 112.521 127.29 113.381 128.506 111.99L149.489 87.989C151.082 86.166 153.918 86.166 155.511 87.989L176.494 111.99C177.71 113.381 180 112.521 180 110.674V32H209V171.2H90.7851L90.8388 171.329H63.4116C54.8788 171.329 47.9616 178.246 47.9616 186.779C47.9616 194.403 53.4852 200.738 60.7494 202H216V43H223C227.418 43 231 46.5817 231 51V202V216.4C231 220.818 227.418 224.4 223 224.4H58V224.268C40.6331 223.488 26.5848 208.699 25.1252 190H25V186.779V51C25 40.5066 33.5066 32 44 32ZM66 179C61.5817 179 58 182.582 58 187C58 191.418 61.5817 195 66 195H208V179H66Z"/></svg> Documentation</button></a>
-      <a onclick="this.href='/example/'+document.getElementById('LAB1').value+'.html'"><button>See slected example</button></a>
-      <a href="/module"><button>Modules</button></a>
+      <div>
+        <a href="https://htms-docs.fsh.plus/" target="_blank"><button aria-label="Documentation"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><!--Fsh icons--><path fill-rule="evenodd" clip-rule="evenodd" d="M44 32H125V110.674C125 112.521 127.29 113.381 128.506 111.99L149.489 87.989C151.082 86.166 153.918 86.166 155.511 87.989L176.494 111.99C177.71 113.381 180 112.521 180 110.674V32H209V171.2H90.7851L90.8388 171.329H63.4116C54.8788 171.329 47.9616 178.246 47.9616 186.779C47.9616 194.403 53.4852 200.738 60.7494 202H216V43H223C227.418 43 231 46.5817 231 51V202V216.4C231 220.818 227.418 224.4 223 224.4H58V224.268C40.6331 223.488 26.5848 208.699 25.1252 190H25V186.779V51C25 40.5066 33.5066 32 44 32ZM66 179C61.5817 179 58 182.582 58 187C58 191.418 61.5817 195 66 195H208V179H66Z"/></svg> Documentation</button></a>
+        <a onclick="this.href='/example/'+document.getElementById('LAB1').value+'.html'"><button>See slected example</button></a>
+        <a href="/module"><button>Modules</button></a>
+      </div>
     </main>
   </body>
 </html>
