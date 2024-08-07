@@ -55,7 +55,7 @@ function SGetSample(args, type) {
     }
     let sample = imports[args[3]];
     if (sample) {
-      if ((elm.getAttribute('var') || '').value) {
+      if (elm.getAttribute('var')) {
         elm.getAttribute('var').value.split(';').filter(e=>e.length).forEach(t=>{
           t = t.split(':');
           sample = sample.replaceAll(`\${${t[0]}}`, t[1])
