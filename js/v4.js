@@ -56,10 +56,14 @@ function SGetSample(args, type) {
     let sample = imports[args[3]];
     if (sample) {
       if (elm.getAttribute('var')) {
-        elm.getAttribute('var').value.split(';').filter(e=>e.length).forEach(t=>{
-          t = t.split(':');
-          sample = sample.replaceAll(`\${${t[0]}}`, t[1])
-        })
+        elm.getAttribute('var')
+          .split(';')
+          .map(e => e.trim())
+          .filter(e => e.length>0)
+          .forEach(t => {
+            t = t.split(':');
+            sample = sample.replaceAll(`\${${t[0]}}`, t[1])
+          })
       }
       if (type === 'inject') {
         elm.innerHTML = sample;
