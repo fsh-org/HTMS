@@ -5,8 +5,8 @@ css.innerHTML = `html {
   background-color: #111;
 }
 body {
-  min-width: 100vh;
-  min-width: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
   filter: invert(100%) hue-rotate(180deg);
 }
 /* Do not invert media (revert the invert). */
