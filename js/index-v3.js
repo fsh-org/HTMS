@@ -1,3 +1,5 @@
+console.warn('Please update your htms cdn url to the new format')
+
 let files = {};
 let imports = {};
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

@@ -3,6 +3,8 @@
   Maintained by Fsh-org
 */
 
+console.warn('Please update your htms cdn url to the new format')
+
 // Data
 let files = {};
 let imports = {};

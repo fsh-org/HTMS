@@ -90,7 +90,6 @@ function SUpdate() {
       case 'import':
         if (args[2] != 'from') {
           throw new Error('Import missing "from"')
-          return;
         }
         SFile(args[3].slice(1,-1)).then(file => {
           args[1]
@@ -105,7 +104,6 @@ function SUpdate() {
       case 'inject':
         if (args[2] != 'with') {
           throw new Error('Inject missing "with"')
-          return;
         }
         Array.from(document.getElementsByTagName(args[1].slice(1,-1))).forEach(async elm => {
           for (let i = 0; i < 5; i++) {
@@ -129,7 +127,6 @@ function SUpdate() {
       case 'replace':
         if (args[2] != 'with') {
           throw new Error('Replace missing "with"')
-          return;
         }
         Array.from(document.getElementsByTagName(args[1].slice(1,-1))).forEach(async elm => {
           for (let i = 0; i < 5; i++) {
