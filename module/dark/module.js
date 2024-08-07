@@ -5,15 +5,13 @@ css.innerHTML = `html {
   background-color: #111;
 }
 body {
+  min-width: 100vh;
+  min-width: 100dvh;
   filter: invert(100%) hue-rotate(180deg);
 }
 /* Do not invert media (revert the invert). */
 img, video, iframe, .reverse {
   filter: invert(100%) hue-rotate(180deg);
-}
-/* Improve contrast on icons. */
-.icon {
-  filter: invert(15%) hue-rotate(180deg);
 }
 /* Re-enable code block backgrounds. */
 pre {
