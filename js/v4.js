@@ -31,7 +31,6 @@ async function SFile(url) {
     }
   });
 }
-
 // Replace a element
 function SReplace(Obj, str) {
   if(Obj.outerHTML) {
@@ -44,6 +43,33 @@ function SReplace(Obj, str) {
     ObjParent = Obj.parentNode;
     ObjParent.replaceChild(tmpObj, Obj); 
   }
+}
+// Get sample
+function SGetSample(args, type) {
+  args[3] = args[3].slice(1,-1);
+  Array.from(document.getElementsByTagName(args[1].slice(1,-1))).forEach(async elm => {
+    for (let i = 0; i < 20; i++) {
+      if (!imports[args[3]]) {
+        await delay(100)
+      }
+    }
+    let sample = imports[args[3]];
+    if (sample) {
+      if ((elm.getAttribute('var') || '').value) {
+        elm.getAttribute('var').value.split(';').filter(e=>e.length).forEach(t=>{
+          t = t.split(':');
+          sample = sample.replaceAll(`\${${t[0]}}`, t[1])
+        })
+      }
+      if (type === 'inject') {
+        elm.innerHTML = sample;
+      } else {
+        SReplace(elm, sample);
+      }
+    } else {
+      throw new Error(args[3]+' was not defined when '+type+' loaded')
+    }
+  })
 }
 
 // Run config
@@ -94,7 +120,7 @@ function SUpdate() {
         SFile(args[3].slice(1,-1)).then(file => {
           args[1]
             .split(',')
-            .map(ee => ee.slice(1,-1))
+            .map(name => name.slice(1,-1))
             .forEach(t => {
               let reg = new RegExp('<sample .*?name="'+t+'".*?>[^¬]*?</sample>');
               imports[t] = file.match(reg)[0].replaceAll(/<sample .+?>|<\/sample>/g, '').trim();
@@ -105,47 +131,13 @@ function SUpdate() {
         if (args[2] != 'with') {
           throw new Error('Inject missing "with"')
         }
-        Array.from(document.getElementsByTagName(args[1].slice(1,-1))).forEach(async elm => {
-          for (let i = 0; i < 5; i++) {
-            if (!imports[args[3].slice(1,-1)]) {
-              await delay(200)
-            }
-          }
-          if (imports[args[3].slice(1,-1)]) {
-            let ht = imports[args[3].slice(1,-1)];
-            if ((elm.attributes['var'] || '').value) {
-              elm.attributes['var'].value.split(';').filter(e=>e.length).forEach(t=>{
-                ht = ht.replaceAll('${'+t.split(':')[0]+'}', t.split(':')[1])
-              })
-            }
-            elm.innerHTML = ht
-          } else {
-            throw new Error(args[3].slice(1,-1)+' was not defined when inject loaded')
-          }
-        })
+        SGetSample(args, 'inject')
         break;
       case 'replace':
         if (args[2] != 'with') {
           throw new Error('Replace missing "with"')
         }
-        Array.from(document.getElementsByTagName(args[1].slice(1,-1))).forEach(async elm => {
-          for (let i = 0; i < 5; i++) {
-            if (!imports[args[3].slice(1,-1)]) {
-              await delay(200)
-            }
-          }
-          if (imports[args[3].slice(1,-1)]) {
-            let ht = imports[args[3].slice(1,-1)];
-            if ((elm.attributes['var'] || '').value) {
-              elm.attributes['var'].value.split(';').filter(e=>e.length).forEach(t=>{
-                ht = ht.replaceAll('${'+t.split(':')[0]+'}', t.split(':')[1])
-              })
-            }
-            SReplace(elm, ht)
-          } else {
-            throw new Error(args[3].slice(1,-1)+' was not defined when replace loaded')
-          }
-        })
+        SGetSample(args, 'replace')
         break;
       case 'module':
         SFile('https://htms.fsh.plus/module/'+args[1].slice(1,-1)+'/module.js').then(code => eval(code))
