@@ -80,11 +80,16 @@ function SGetSample(args, type) {
 function SUpdate() {
   // Check experiments
   if (exp.noDuplicateStyle) {
-    if (!document.getElementById('HTMS-style')) {
-      document.head.innerHTML += '<style id="HTMS-style">htms{display:none ! important}</style>';
+    if (!document.getElementById('htms-style')) {
+      let style = document.createElement('style');
+      style.id = 'htms-style';
+      style.textContent = 'htms{display:none !important}';
+      document.head.appendChild(style);
     }
   } else {
-    document.head.innerHTML += '<style>htms{display:none ! important}</style>';
+    let style = document.createElement('style');
+    style.textContent = 'htms{display:none !important}';
+    document.head.appendChild(style);
   }
 
   // Remove listeners if there are any
