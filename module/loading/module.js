@@ -39,16 +39,26 @@ document.head.insertAdjacentHTML('beforeend', `<style>
     50% {filter: brightness(0.8)}
   }
   @keyframes LMRainbow {
-    0%, 100% {background-color: rgba(255, 0, 0, 1)}
-    10% {background-color: rgba(255, 154, 0, 1)}
-    20% {background-color: rgba(208, 222, 33, 1)}
-    30% {background-color: rgba(79, 220, 74, 1)}
-    40% {background-color: rgba(63, 218, 216, 1)}
-    50% {background-color: rgba(47, 201, 226, 1)}
-    60% {background-color: rgba(28, 127, 238, 1)}
-    70% {background-color: rgba(95, 21, 242, 1)}
-    80% {background-color: rgba(186, 12, 248, 1)}
-    90% {background-color: rgba(251, 7, 217, 1)}
+    0%, 100% {background-color: hsl(0, 100%, 50%)}
+    5% {background-color: hsl(18, 100%, 50%)}
+    10% {background-color: hsl(36, 100%, 50%)}
+    15% {background-color: hsl(54, 100%, 50%)}
+    20% {background-color: hsl(72, 100%, 50%)}
+    25% {background-color: hsl(90, 100%, 50%)}
+    30% {background-color: hsl(108, 100%, 50%)}
+    35% {background-color: hsl(126, 100%, 50%)}
+    40% {background-color: hsl(144, 100%, 50%)}
+    45% {background-color: hsl(162, 100%, 50%)}
+    50% {background-color: hsl(180, 100%, 50%)}
+    55% {background-color: hsl(198, 100%, 50%)}
+    60% {background-color: hsl(216, 100%, 50%)}
+    65% {background-color: hsl(234, 100%, 50%)}
+    70% {background-color: hsl(252, 100%, 50%)}
+    75% {background-color: hsl(270, 100%, 50%)}
+    80% {background-color: hsl(288, 100%, 50%)}
+    85% {background-color: hsl(306, 100%, 50%)}
+    90% {background-color: hsl(324, 100%, 50%)}
+    95% {background-color: hsl(342, 100%, 50%)}
   }
 
 /*.progress-bar {
