@@ -55,6 +55,7 @@ function SGetSample(args, type) {
     }
     let sample = imports[args[3]];
     if (sample) {
+      // Static vars
       if (elm.getAttribute('var')) {
         elm.getAttribute('var')
           .split(';')
@@ -65,6 +66,7 @@ function SGetSample(args, type) {
             sample = sample.replaceAll(`\${${t[0]}}`, t[1])
           })
       }
+      // Add sample
       if (type === 'inject') {
         elm.innerHTML = sample;
       } else {
@@ -159,8 +161,8 @@ function SUpdate() {
     }
   }
 
-  // Dynamic vars
-  const valueElements = ['input', 'textarea', 'select'];
+  // Shared vars
+  const valueElements = ['input', 'textarea', 'select', 'meter', 'progress'];
   Array.from(document.querySelectorAll('[htms-out]')).forEach(u => {
     const tagName = u.tagName.toLowerCase();
   
