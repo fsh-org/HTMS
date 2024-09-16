@@ -1,4 +1,4 @@
-function ShtmlToElement(html) {
+function HtmsToElement(html) {
   var template = document.createElement('template');
   html = html.trim();
   template.innerHTML = html;
@@ -10,18 +10,18 @@ function Sreplace(Obj,str) {
     Obj.outerHTML= str;
   } else {
     var tmpObj=document.createElement("div");
-    tmpObj.innerHTML='<!-- S-html replace -->';
+    tmpObj.innerHTML='<!-- Htms replace -->';
     ObjParent=Obj.parentNode;
      ObjParent.replaceChild(tmpObj,Obj); 
-    ObjParent.innerHTML=ObjParent.innerHTML.replace('<div><!-- S-html replace --></div>',str);
+    ObjParent.innerHTML=ObjParent.innerHTML.replace('<div><!-- Htms replace --></div>',str);
   }
 }
 
 function SUpdate() {
-  document.head.innerHTML += "<style>s-html{display:none ! important}</style>"
-  let config = document.getElementsByTagName("s-html");
+  document.head.innerHTML += "<style>htms{display:none ! important}</style>"
+  let config = document.getElementsByTagName("htms");
   if (config.length > 1) {
-    console.warn("Only the first s-html element will be read");
+    console.warn("Only the first htms element will be read");
   };
   if (config.length < 1) {
     console.warn("S html was added but not used")
@@ -56,7 +56,7 @@ function SUpdate() {
           Array.from(document.getElementsByTagName(t[1])).forEach(h => {
             fetch(data[t[3]]).then(async tr => {
               let tt = await tr.text();
-              let doc = ShtmlToElement(tt)
+              let doc = HtmsToElement(tt)
               let coun = 0;
               Array.from(doc).forEach(s => {
                 if (s.attributes[0].nodeValue == t[3]) {

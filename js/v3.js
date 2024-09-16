@@ -21,10 +21,10 @@ function SReplace(Obj,str) {
     Obj.outerHTML= str;
   } else {
     var tmpObj=document.createElement("div");
-    tmpObj.innerHTML='<!-- S-html replace -->';
+    tmpObj.innerHTML='<!-- Htms replace -->';
     ObjParent=Obj.parentNode;
      ObjParent.replaceChild(tmpObj,Obj); 
-    ObjParent.innerHTML=ObjParent.innerHTML.replace('<div><!-- S-html replace --></div>',str);
+    ObjParent.innerHTML=ObjParent.innerHTML.replace('<div><!-- Htms replace --></div>',str);
   }
 }
 
