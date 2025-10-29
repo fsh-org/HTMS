@@ -15,6 +15,11 @@
     <!-- ------------------ -->
     <script src="https://account.fsh.plus/script.js"></script>
     <style>
+      button:has(svg) {
+        display: inline-flex;
+        gap: 5px;
+        align-items: center;
+      }
       .banner {
         background: linear-gradient( rgba(16, 16, 0, 0.08), rgba(16, 16, 0, 0.2) ), url(/media/banner.jpg), #ffcc23;
         background-position: left center;
@@ -88,7 +93,7 @@
           <option value=".es5.js">ES5</option>
         </select>
       </div>
-      <pre><button aria-label="Copy" class="copy" onclick="navigator.clipboard.writeText(document.getElementById('copy').innerHTML.replaceAll('&\lt;','<').replaceAll('&\gt;','>'))"><svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 256 256"><!--Fsh icons--><rect x="91" y="93" width="116" height="116" rx="14" stroke-width="12" fill="none"/><rect x="42" y="41" width="128" height="128" rx="20"/></svg></button><code id="code"></code></pre>
+      <pre><button aria-label="Copy" class="copy" onclick="navigator.clipboard.writeText(document.getElementById('copy').innerHTML.replaceAll('&\lt;','<').replaceAll('&\gt;','>'))"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><rect x="88.5" y="88.5" width="155" height="155" rx="17.5" stroke-width="25" fill="none"/><rect width="180" height="180" rx="30"/></svg></button><code id="code"></code></pre>
       <p style="display:none" id="copy"></p>
       <a onclick="this.href='/example/'+document.getElementById('version').value+'.html'"><button>See example</button></a>
       <script>
@@ -114,8 +119,8 @@
       </script>
       <h2>Resources</h2>
       <div>
-        <a href="https://htms-docs.fsh.plus/" target="_blank"><button aria-label="Documentation"><svg width="18" height="18" style="margin:-3px" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><!--Fsh icons--><path fill-rule="evenodd" clip-rule="evenodd" d="M44 32H125V110.674C125 112.521 127.29 113.381 128.506 111.99L149.489 87.989C151.082 86.166 153.918 86.166 155.511 87.989L176.494 111.99C177.71 113.381 180 112.521 180 110.674V32H209V171.2H90.7851L90.8388 171.329H63.4116C54.8788 171.329 47.9616 178.246 47.9616 186.779C47.9616 194.403 53.4852 200.738 60.7494 202H216V43H223C227.418 43 231 46.5817 231 51V202V216.4C231 220.818 227.418 224.4 223 224.4H58V224.268C40.6331 223.488 26.5848 208.699 25.1252 190H25V186.779V51C25 40.5066 33.5066 32 44 32ZM66 179C61.5817 179 58 182.582 58 187C58 191.418 61.5817 195 66 195H208V179H66Z"/></svg> Documentation</button></a>
-        <a href="/module"><button aria-label="Modules"><svg width="18" height="18" style="margin:-3px" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><!--Fsh icons--><path fill-rule="evenodd" clip-rule="evenodd" d="M180 55C180 58.5555 178.961 61.9377 177.088 65H210C218.284 65 225 71.7157 225 80V112.912C221.938 111.039 218.556 110 215 110C201.193 110 190 125.67 190 145C190 164.33 201.193 180 215 180C218.556 180 221.938 178.961 225 177.088V210C225 218.284 218.284 225 210 225H177.088C178.961 221.938 180 218.556 180 215C180 201.193 164.33 190 145 190C125.67 190 110 201.193 110 215C110 218.556 111.039 221.938 112.912 225H80C71.7157 225 65 218.284 65 210V177.088C61.9377 178.961 58.5555 180 55 180C41.1929 180 30 164.33 30 145C30 125.67 41.1929 110 55 110C58.5555 110 61.9377 111.039 65 112.912V80C65 71.7157 71.7157 65 80 65H112.912C111.039 61.9377 110 58.5555 110 55C110 41.1929 125.67 30 145 30C164.33 30 180 41.1929 180 55Z"/></svg> Modules</button></a>
+        <a href="https://htms-docs.fsh.plus/" target="_blank"><button aria-label="Documentation"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256"><path fill-rule="evenodd" clip-rule="evenodd" d="M20 8H124.272V107.063C124.272 108.91 126.562 109.77 127.778 108.379L155.435 76.743C157.029 74.92 159.864 74.92 161.458 76.743L189.116 108.379C190.332 109.77 192.621 108.91 192.621 107.063V8H212C214.761 8 217 10.2386 217 13V195C217 197.761 214.761 200 212 200H34.421C27.5538 200.042 22 205.623 22 212.5C22 219.403 27.5964 225 34.5 225H60V225H219C227.284 225 234 218.284 234 210V200V26C234 23.7909 235.791 22 238 22H244C250.627 22 256 27.3726 256 34V200V225V232C256 240.284 249.284 247 241 247H43V247H20C8.9543 247 0 238.045 0 227V200V187V28C0 16.9543 8.95431 8 20 8Z"/></svg> Documentation</button></a>
+        <a href="/module"><button aria-label="Modules"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256"><path fill-rule="evenodd" clip-rule="evenodd" d="M196.923 32.8205C196.923 37.4883 195.559 41.9286 193.1 45.9489H241C249.284 45.9489 256 52.6646 256 60.9489V108.849C251.98 106.39 247.54 105.026 242.872 105.026C224.746 105.026 210.051 125.598 210.051 150.975C210.051 176.351 224.746 196.923 242.872 196.923C247.54 196.923 251.98 195.559 256 193.1V241C256 249.284 249.284 256 241 256H193.1C195.559 251.98 196.923 247.54 196.923 242.872C196.923 224.745 176.351 210.051 150.974 210.051C125.598 210.051 105.026 224.745 105.026 242.872C105.026 247.54 106.39 251.98 108.849 256H60.9487C52.6644 256 45.9487 249.284 45.9487 241V193.1C41.9285 195.559 37.4883 196.923 32.8205 196.923C14.6942 196.923 0 176.351 0 150.974C0 125.598 14.6942 105.026 32.8205 105.026C37.4883 105.026 41.9285 106.39 45.9487 108.849V60.9489C45.9487 52.6646 52.6644 45.9489 60.9487 45.9489H108.849C106.39 41.9286 105.026 37.4883 105.026 32.8205C105.026 14.6942 125.598 0 150.974 0C176.351 0 196.923 14.6942 196.923 32.8205Z"/></svg> Modules</button></a>
       </div>
     </main>
   </body>
