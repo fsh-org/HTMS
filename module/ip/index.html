@@ -24,12 +24,6 @@
     <h1>Ip Module</h1>
     <p>This module lets you get the users ip</p>
     <p>To get you need to await window.IP()</p>
-    <p>You can also pass a type</p>
-    <ul>
-      <li>private - Private ip</li>
-      <li>public - Public ip</li>
-      <li>all - Both</li>
-    </ul>
-    <button onclick="window.IP().then(async e=> {e=await e;this.innerHTML = e})">Get user IP</button>
+    <button onclick="window.IP().then(e=>{this.innerText=e})">Get user IP</button>
   </body>
 </html>
